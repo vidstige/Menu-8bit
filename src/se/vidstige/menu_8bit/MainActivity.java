@@ -2,7 +2,9 @@ package se.vidstige.menu_8bit;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.view.Menu;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -10,6 +12,10 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		TextView myTextView=(TextView)findViewById(R.id.mytext);
+		Typeface typeFace=Typeface.createFromAsset(getAssets(), "fonts/retro_computer.ttf");
+		myTextView.setTypeface(typeFace);
 	}
 
 	@Override
