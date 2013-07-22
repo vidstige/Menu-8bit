@@ -8,10 +8,13 @@ import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.Menu;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -32,9 +35,13 @@ public class MainActivity extends Activity {
 	    
 
 	    bar.setTitle(f("Title!"));
-	    ActionBar.Tab filesTab = bar.newTab().setText(f("Files"));	    	    
-	    ActionBar.Tab playTab = bar.newTab().setText(f("Play"));
-	    ActionBar.Tab settingsTab = bar.newTab().setText(f("Settings"));
+	    ActionBar.Tab filesTab = bar.newTab();
+	    ActionBar.Tab playTab = bar.newTab();
+	    ActionBar.Tab settingsTab = bar.newTab();
+	    
+	    filesTab.setCustomView(createTextView("Files"));
+	    playTab.setCustomView(createTextView("Play"));
+	    settingsTab.setCustomView(createTextView("Settings"));
 
 	    filesTab.setTabListener(new TabNavigator(new FilesFragment()));
 	    playTab.setTabListener(new TabNavigator(new PlayFragment()));
@@ -47,6 +54,19 @@ public class MainActivity extends Activity {
 //		TextView myTextView=(TextView)findViewById(R.id.mytext);
 //		Typeface typeFace=Typeface.createFromAsset(getAssets(), "fonts/retro_computer.ttf");
 //		myTextView.setTypeface(typeFace);
+	}
+
+	private Typeface typeFace;
+	private TextView createTextView(String string) {
+		TextView tv = new TextView(this);
+		if (typeFace == null)
+			typeFace = Typeface.createFromAsset(getAssets(), "fonts/retro_computer.ttf");
+		tv.setTypeface(typeFace);
+		tv.setText(string);
+		tv.setLayoutParams(new LayoutParams(
+	            LayoutParams.MATCH_PARENT,
+	            LayoutParams.WRAP_CONTENT));
+		return tv; 
 	}
 
 	@Override
