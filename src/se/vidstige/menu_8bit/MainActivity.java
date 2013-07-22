@@ -14,7 +14,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -44,17 +43,13 @@ public class MainActivity extends Activity {
 	    playTab.setCustomView(createTextView("Play"));
 	    settingsTab.setCustomView(createTextView("Settings"));
 
-	    filesTab.setTabListener(new TabNavigator(new FilesFragment()));
-	    playTab.setTabListener(new TabNavigator(new PlayFragment()));
-	    settingsTab.setTabListener(new TabNavigator(new SettingsFragment()));
+	    filesTab.setTabListener(new TabListener<FilesFragment>(this, "files", FilesFragment.class));
+	    playTab.setTabListener(new TabListener<PlayFragment>(this, "play", PlayFragment.class));
+	    settingsTab.setTabListener(new TabListener<SettingsFragment>(this, "settings", SettingsFragment.class));
 
 	    bar.addTab(filesTab);
 	    bar.addTab(playTab);
 	    bar.addTab(settingsTab);
-		
-//		TextView myTextView=(TextView)findViewById(R.id.mytext);
-//		Typeface typeFace=Typeface.createFromAsset(getAssets(), "fonts/retro_computer.ttf");
-//		myTextView.setTypeface(typeFace);
 	}
 
 	private Typeface typeFace;
@@ -71,28 +66,49 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 	
-	private static class TabNavigator implements ActionBar.TabListener
-	{
-	    private Fragment navigationTarget;
+	private class TabListener<T extends Fragment> implements ActionBar.TabListener {
+	    private Fragment fragment;
+	    private final Activity activity;
+	    private final String tag;
+	    private final Class<T> clazz;
 
-	    public TabNavigator(Fragment fragment) {
-	        this.navigationTarget = fragment;
+	    /** Constructor used each time a new tab is created.
+	      * @param activity  The host Activity, used to instantiate the fragment
+	      * @param tag  The identifier tag for the fragment
+	      * @param clz  The fragment's Class, used to instantiate the fragment
+	      */
+	    public TabListener(Activity activity, String tag, Class<T> clazz) {
+	        this.activity = activity;
+	        this.tag = tag;
+	        this.clazz = clazz;
 	    }
 
-	    public void onTabReselected(Tab tab, FragmentTransaction ft) {
-	    }
-
+	    /* The following are each of the ActionBar.TabListener callbacks */
 	    public void onTabSelected(Tab tab, FragmentTransaction ft) {
-	        ft.add(R.id.fragment_container, navigationTarget, null);
+	        // Check if the fragment is already initialized
+	        if (fragment == null) {
+	            // If not, instantiate and add it to the activity
+	        	fragment = Fragment.instantiate(activity, clazz.getName());
+	            ft.add(android.R.id.content, fragment, tag);
+	        } else {
+	            // If it exists, simply attach it in order to show it
+	            ft.attach(fragment);
+	        }
 	    }
 
 	    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-	        ft.remove(navigationTarget);
+	        if (fragment != null) {
+	            // Detach the fragment, because another one is being attached
+	            ft.detach(fragment);
+	        }
+	    }
+
+	    public void onTabReselected(Tab tab, FragmentTransaction ft) {
+	        // User selected the already selected tab. Usually do nothing.
 	    }
 	}
 }
