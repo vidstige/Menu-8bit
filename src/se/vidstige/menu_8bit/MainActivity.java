@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
@@ -58,14 +59,13 @@ public class MainActivity extends Activity {
 
 	private Typeface typeFace;
 	private TextView createTextView(String string) {
-		TextView tv = new TextView(this);
+		LayoutInflater inflater = LayoutInflater.from(this);
+	    TextView tv = (TextView)inflater.inflate(R.layout.tab, null);
+	    
 		if (typeFace == null)
 			typeFace = Typeface.createFromAsset(getAssets(), "fonts/retro_computer.ttf");
 		tv.setTypeface(typeFace);
 		tv.setText(string);
-		tv.setLayoutParams(new LayoutParams(
-	            LayoutParams.MATCH_PARENT,
-	            LayoutParams.WRAP_CONTENT));
 		return tv; 
 	}
 
