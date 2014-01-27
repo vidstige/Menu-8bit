@@ -2,7 +2,9 @@ package se.vidstige.menu_8bit;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 public class Tabs8bit extends FrameLayout {
 
 	private final LinearLayout _tabs;
+	private Typeface typeFace;
 	
 	public Tabs8bit(Context context) {
 		super(context);
@@ -35,22 +38,27 @@ public class Tabs8bit extends FrameLayout {
 
 	public void add(CharSequence title, Fragment fragment)
 	{
-		_tabs.addView(createLabel(title));
+		TextView tv = createTextView(title);
+		setMargins(tv, 16, 4, 16, 4);
+		_tabs.addView(tv);
 	}
 	
-	private TextView createLabel(CharSequence text)
+	private void setMargins(View v, int left, int top, int right, int bottom)
+	{
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		lp.setMargins(left, top, right, bottom);
+		v.setLayoutParams(lp);
+	}
+	
+	private TextView createTextView(CharSequence text)
 	{
 		TextView tv = new TextView(getContext());
 		tv.setText(text);
+		
+		if (typeFace == null)
+			typeFace = Typeface.createFromAsset(getContext().getAssets(), "fonts/retro_computer.ttf");
+		tv.setTypeface(typeFace);
+		
 		return tv;
-	}
-//	
-//	@Override
-//	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//		setMeasuredDimension(100, 100);
-//	}
-//    
-//	@Override
-//	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-//	}
+	}	
 }
