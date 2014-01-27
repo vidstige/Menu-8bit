@@ -13,20 +13,24 @@ public class Tabs8bit extends FrameLayout {
 	
 	public Tabs8bit(Context context) {
 		super(context);
-		_tabs = new LinearLayout(getContext());
-		addView(_tabs);
+		_tabs = createAndAdd();
 	}
 	
 	public Tabs8bit(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		_tabs = new LinearLayout(getContext());
-		addView(_tabs);
+		_tabs = createAndAdd();
 	}
 	
 	public Tabs8bit(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		_tabs = new LinearLayout(getContext());
-		addView(_tabs);
+		_tabs = createAndAdd();
+	}
+	
+	private LinearLayout createAndAdd()
+	{		
+		LinearLayout tabs = new LinearLayout(getContext());
+		addView(tabs);
+		return tabs;
 	}
 
 	public void add(CharSequence title, Fragment fragment)
