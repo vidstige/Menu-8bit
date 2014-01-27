@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/tabs"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#422d84">
     
 </se.vidstige.menu_8bit.Tabs8bit>
