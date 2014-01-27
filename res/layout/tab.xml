@@ -1,5 +1,9 @@
-<TextView
+<Button
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center" />
+	android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+	android:background="@drawable/button8"
+	android:layout_marginLeft="16dp"
+	android:layout_marginRight="16dp"
+	android:layout_marginTop="4dp"
+	android:layout_marginBottom="4dp"	/>

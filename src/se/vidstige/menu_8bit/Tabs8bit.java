@@ -4,7 +4,9 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,27 +40,28 @@ public class Tabs8bit extends FrameLayout {
 
 	public void add(CharSequence title, Fragment fragment)
 	{
-		TextView tv = createTextView(title);
-		setMargins(tv, 16, 4, 16, 4);
-		_tabs.addView(tv);
-	}
-	
-	private void setMargins(View v, int left, int top, int right, int bottom)
-	{
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-		lp.setMargins(left, top, right, bottom);
-		v.setLayoutParams(lp);
-	}
-	
-	private TextView createTextView(CharSequence text)
-	{
-		TextView tv = new TextView(getContext());
-		tv.setText(text);
+		LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+		View view = layoutInflater.inflate(R.layout.tab, null);
 		
+		TextView button = (TextView)view;
+		
+		button.setText(title);
+		//setMargins(button, 16, 8, 16, 8);
+		setTypeface(button);
+		_tabs.addView(button);
+	}
+	
+//	private void setMargins(View v, int left, int top, int right, int bottom)
+//	{
+//		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//		lp.setMargins(left, top, right, bottom);
+//		v.setLayoutParams(lp);
+//	}
+	
+	private void setTypeface(TextView tv)
+	{		
 		if (typeFace == null)
 			typeFace = Typeface.createFromAsset(getContext().getAssets(), "fonts/retro_computer.ttf");
 		tv.setTypeface(typeFace);
-		
-		return tv;
 	}	
 }
