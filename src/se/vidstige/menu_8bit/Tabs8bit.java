@@ -48,15 +48,15 @@ public class Tabs8bit extends FrameLayout {
 		button.setText(title);
 		//setMargins(button, 16, 8, 16, 8);
 		setTypeface(button);
-		_tabs.addView(button);
+		_tabs.addView(button, createMargins(8, 8, 8, 8));
 	}
-	
-//	private void setMargins(View v, int left, int top, int right, int bottom)
-//	{
-//		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//		lp.setMargins(left, top, right, bottom);
-//		v.setLayoutParams(lp);
-//	}
+		
+	private LinearLayout.LayoutParams createMargins(int left, int top, int right, int bottom)
+	{
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		lp.setMargins(left, top, right, bottom);
+		return lp;
+	}
 	
 	private void setTypeface(TextView tv)
 	{		
